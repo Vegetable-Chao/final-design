@@ -122,7 +122,7 @@ class Cell(nn.Module):
         states = [s0, s1]
         offset = 0
         for i in range(self._steps):
-            s = sum(weights2[offset+j]*self.cell_ops[offset+j](h, weights[offset+j]) for j, h in enumerate(states))
+            s = sum(self.cell_ops[offset+j](h, weights[offset+j]) for j, h in enumerate(states))
             offset += len(states)
             states.append(s)
 
@@ -243,16 +243,20 @@ class Network(nn.Module):
             self.weights = F.softmax(self.alphas_normal, dim=0)
         else:
             self.weights = F.softmax(self.alphas_normal, dim=-1)
-        n = 3
-        start = 2
-        weights2 = F.softmax(self.betas_normal[0:2], dim=-1)
-        for i in range(self._steps-1):
-            end = start + n
-            tw2 = F.softmax(self.betas_normal[start:end], dim=-1)
-            start = end
-            n += 1
-            weights2 = torch.cat([weights2,tw2],dim=0)
-        self.weights2=weights2
+        #****************************************************************************
+        # n = 3
+        # start = 2
+        # weights2 = F.softmax(self.betas_normal[0:2], dim=-1)
+        # for i in range(self._steps-1):
+        #     end = start + n
+        #     tw2 = F.softmax(self.betas_normal[start:end], dim=-1)
+        #     start = end
+        #     n += 1
+        #     weights2 = torch.cat([weights2,tw2],dim=0)
+        # self.weights2=weights2
+        #********************************************************************************
+        self.weights2=1 #随便赋值
+        #**************************************************************************88888
         for i, cell in enumerate(self.cells):
             # if cell.reduction:
             #     weights=1

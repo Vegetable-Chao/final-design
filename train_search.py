@@ -66,6 +66,78 @@ if args.cifar100:
 else:
     CIFAR_CLASSES = 10
     data_folder = 'cifar-10-batches-py'
+    
+
+def shengcheng(arch_nor,switches_normal):
+            switches_nor=copy.deepcopy(switches_normal)
+            normal_prob = F.softmax(arch_nor, dim=-1).data.cpu()                      #.numpy()
+            # reduce_prob = F.softmax(arch_param[1], dim=sm_dim).data.cpu().numpy()
+            normal_final = [0 for idx in range(14)]
+            # reduce_final = [0 for idx in range(14)]
+            # # remove all Zero operations*************************************************
+            for i in range(14):
+                if switches_nor[i][0] == True:
+                    normal_prob[i][0] = 0
+                normal_final[i] = max(normal_prob[i])  #概率值
+                # if switches_reduce_2[i][0] == True:
+                #     reduce_prob[i][0] = 0
+                # reduce_final[i] = max(reduce_prob[i])       #最终选边操作
+
+
+            # Generate Architecture, similar to DARTS
+            keep_normal = [0, 1]                           #？
+            # keep_reduce = [0, 1]
+            n = 3
+            start = 2
+            for i in range(3):
+                end = start + n
+                tbsn = normal_final[start:end]
+                # tbsr = reduce_final[start:end]
+                edge_n = sorted(range(n), key=lambda x: tbsn[x])      
+                keep_normal.append(edge_n[-1] + start)        #边
+                keep_normal.append(edge_n[-2] + start)
+                # edge_r = sorted(range(n), key=lambda x: tbsr[x])
+                # keep_reduce.append(edge_r[-1] + start)
+                # keep_reduce.append(edge_r[-2] + start)
+                start = end
+                n = n + 1
+            # set switches according the ranking of arch parameters
+            for i in range(14):
+                if not i in keep_normal:
+                    for j in range(len(PRIMITIVES)):
+                        switches_nor[i][j] = False              #上一个swichnormal是选操作，这一个是选边
+                        
+                else:
+                    index=torch.max(normal_prob[i],-1)[1]
+                    s=-1;flag=False
+                    for j in range(len(PRIMITIVES)):
+                        if switches_nor[i][j]==True:
+                            s+=1
+                            if s!=index:
+                                switches_nor[i][j]=False
+                    
+                # if not i in keep_reduce:
+                #     for j in range(len(PRIMITIVES)):
+                #         switches_reduce[i][j] = False
+            # translate switches into genotype
+            genotype = parse_network(switches_nor)
+            logging.info(genotype)
+            # ## restrict skipconnect (normal cell only)
+            # logging.info('Restricting skipconnect...')
+            # generating genotypes with different numbers of skip-connect operations
+            # for sks in range(0, 9):                                         # ???
+            #     max_sk = 8 - sks                
+            #     num_sk = check_sk_number(switches_normal)               
+            #     if not num_sk > max_sk:
+            #         continue
+            #     while num_sk > max_sk:
+            #         normal_prob = delete_min_sk_prob(switches_normal, switches_normal_2, normal_prob)
+            #         switches_normal = keep_1_on(switches_normal_2, normal_prob)
+            #         switches_normal = keep_2_branches(switches_normal, normal_prob)
+            #         num_sk = check_sk_number(switches_normal)
+            #     logging.info('Number of skip-connect: %d', max_sk)
+            #     genotype = parse_network(switches_normal)
+            #     logging.info(genotype)              
 
 
 def main():
@@ -195,6 +267,11 @@ def main():
                 valid_acc, valid_obj = infer(valid_queue, model, criterion)
                 logging.info('Valid_acc %f', valid_acc)
             print("epoch=",epoch,'weights=',model.module.weights,'weights2=',model.module.weights2)
+            #/************************************************************/
+            arch_normal = model.module.arch_parameters()[0]
+            shengcheng(arch_normal,switches_normal)
+            #/***********************************************************/
+            
         utils.save(model, os.path.join(args.save, 'weights.pt'))
         print('------Dropping %d paths------' % num_to_drop[sp])
 
@@ -215,13 +292,16 @@ def main():
             for j in range(len(PRIMITIVES)):
                 if switches_normal[i][j]:
                     idxs.append(j)
+           
+            # for the last stage, drop all Zero operations         
+            drop1 = get_min_k_no_zero(normal_prob[i, :], idxs, num_to_drop[sp]) ###看函数？？？看理论
+            drop2 = get_min_k(normal_prob[i, :], num_to_drop[sp])
             if sp == len(num_to_keep) - 1:
-                # for the last stage, drop all Zero operations
-                drop = get_min_k_no_zero(normal_prob[i, :], idxs, num_to_drop[sp]) ###看函数？？？看理论
+                for idx in drop1:
+                    switches_normal[i][idxs[idx]] = False 
             else:
-                drop = get_min_k(normal_prob[i, :], num_to_drop[sp])
-            for idx in drop:
-                switches_normal[i][idxs[idx]] = False                         #不断地关掉无效操作，正则化方法
+                for idx in drop2:
+                    switches_normal[i][idxs[idx]] = False                         #不断地关掉无效操作，正则化方法
 
 
         # reduce_prob = F.softmax(arch_param[1], dim=-1).data.cpu().numpy()
@@ -242,68 +322,11 @@ def main():
         logging_switches(switches_normal)
         # logging.info('switches_reduce = %s', switches_reduce)
         # logging_switches(switches_reduce)
+        
+        #*****************************************************************************************************************
+        #封装成函数
 
         
-        if sp == len(num_to_keep) - 1:
-            arch_param = model.module.arch_parameters()                    #module可能为硬件方法
-            normal_prob = F.softmax(arch_param[0], dim=sm_dim).data.cpu().numpy()
-            # reduce_prob = F.softmax(arch_param[1], dim=sm_dim).data.cpu().numpy()
-            normal_final = [0 for idx in range(14)]
-            # reduce_final = [0 for idx in range(14)]
-            # # remove all Zero operations*************************************************
-            for i in range(14):
-                if switches_normal_2[i][0] == True:
-                    normal_prob[i][0] = 0
-                normal_final[i] = max(normal_prob[i])  #概率值
-                # if switches_reduce_2[i][0] == True:
-                #     reduce_prob[i][0] = 0
-                # reduce_final[i] = max(reduce_prob[i])       #最终选边操作
-
-
-            # Generate Architecture, similar to DARTS
-            keep_normal = [0, 1]                           #？
-            # keep_reduce = [0, 1]
-            n = 3
-            start = 2
-            for i in range(3):
-                end = start + n
-                tbsn = normal_final[start:end]
-                # tbsr = reduce_final[start:end]
-                edge_n = sorted(range(n), key=lambda x: tbsn[x])      
-                keep_normal.append(edge_n[-1] + start)        #边
-                keep_normal.append(edge_n[-2] + start)
-                # edge_r = sorted(range(n), key=lambda x: tbsr[x])
-                # keep_reduce.append(edge_r[-1] + start)
-                # keep_reduce.append(edge_r[-2] + start)
-                start = end
-                n = n + 1
-            # set switches according the ranking of arch parameters
-            for i in range(14):
-                if not i in keep_normal:
-                    for j in range(len(PRIMITIVES)):
-                        switches_normal[i][j] = False              #上一个swichnormal是选操作，这一个是选边
-                # if not i in keep_reduce:
-                #     for j in range(len(PRIMITIVES)):
-                #         switches_reduce[i][j] = False
-            # translate switches into genotype
-            genotype = parse_network(switches_normal)
-            logging.info(genotype)
-            # ## restrict skipconnect (normal cell only)
-            logging.info('Restricting skipconnect...')
-            # generating genotypes with different numbers of skip-connect operations
-            for sks in range(0, 9):                                         # ???
-                max_sk = 8 - sks                
-                num_sk = check_sk_number(switches_normal)               
-                if not num_sk > max_sk:
-                    continue
-                while num_sk > max_sk:
-                    normal_prob = delete_min_sk_prob(switches_normal, switches_normal_2, normal_prob)
-                    switches_normal = keep_1_on(switches_normal_2, normal_prob)
-                    switches_normal = keep_2_branches(switches_normal, normal_prob)
-                    num_sk = check_sk_number(switches_normal)
-                logging.info('Number of skip-connect: %d', max_sk)
-                genotype = parse_network(switches_normal)
-                logging.info(genotype)              
 
 def train(train_queue, valid_queue, model, network_params, criterion, optimizer, optimizer_a, lr, train_arch=True):
     objs = utils.AvgrageMeter()
