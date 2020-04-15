@@ -1,0 +1,26 @@
+2020-04-15 19:14:32,983 args = Namespace(add_layers=['0'], add_width=['0'], arch_learning_rate=0.0006, arch_weight_decay=0.001, batch_size=128, cifar100=False, cutout=False, cutout_length=16, drop_path_prob=0.3, dropout_rate=[], epochs=25, grad_clip=5, init_channels=16, layers=8, learning_rate=0.025, learning_rate_min=0.0, momentum=0.9, noarc=10, note='try', report_freq=50, sample=[], save='./expsearch-try-20200415-191432', seed=0, stages=3, tmp_data_dir='../data1', train_portion=0.5, weight_decay=0.0003, workers=2)
+2020-04-15 19:14:38,990 param size = 0.238906MB
+2020-04-15 19:14:38,990 layers=8
+2020-04-15 19:14:38,990 channels=16
+2020-04-15 19:14:38,990 K=4
+2020-04-15 19:14:39,003 Epoch: 0 lr: 2.500000e-02
+2020-04-15 19:14:41,171 TRAIN Step: 000 Objs: 2.930618e+00 R1: 11.718750 R5: 49.218750
+2020-04-15 19:15:15,219 TRAIN Step: 050 Objs: 2.108277e+00 R1: 25.153186 R5: 78.170956
+2020-04-15 19:15:48,101 TRAIN Step: 100 Objs: 1.924071e+00 R1: 30.151609 R5: 82.998144
+2020-04-15 19:16:20,549 TRAIN Step: 150 Objs: 1.816529e+00 R1: 33.919702 R5: 85.280422
+2020-04-15 19:16:50,439 Train_acc 36.492000
+2020-04-15 19:16:50,441 Epoch time: 131s
+2020-04-15 19:16:50,450 Genotype(normal=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], normal_concat=range(2, 6), reduce=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], reduce_concat=range(2, 6))
+2020-04-15 19:16:50,450 Epoch: 1 lr: 2.490143e-02
+2020-04-15 19:16:52,069 TRAIN Step: 000 Objs: 1.437289e+00 R1: 44.531250 R5: 90.625000
+2020-04-15 19:17:23,841 TRAIN Step: 050 Objs: 1.426623e+00 R1: 48.345588 R5: 92.723652
+2020-04-15 19:17:56,019 TRAIN Step: 100 Objs: 1.400790e+00 R1: 49.373453 R5: 93.131188
+2020-04-15 19:18:28,550 TRAIN Step: 150 Objs: 1.371992e+00 R1: 50.522558 R5: 93.387831
+2020-04-15 19:18:58,729 Train_acc 51.508000
+2020-04-15 19:18:58,733 Epoch time: 128s
+2020-04-15 19:18:58,742 Genotype(normal=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], normal_concat=range(2, 6), reduce=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], reduce_concat=range(2, 6))
+2020-04-15 19:18:58,742 Epoch: 2 lr: 2.460729e-02
+2020-04-15 19:18:59,898 TRAIN Step: 000 Objs: 1.312543e+00 R1: 53.906250 R5: 92.968750
+2020-04-15 19:19:32,712 TRAIN Step: 050 Objs: 1.208181e+00 R1: 57.398897 R5: 95.006127
+2020-04-15 19:20:04,843 TRAIN Step: 100 Objs: 1.196296e+00 R1: 57.789295 R5: 95.266089
+2020-04-15 19:20:36,693 TRAIN Step: 150 Objs: 1.178281e+00 R1: 58.490273 R5: 95.421151

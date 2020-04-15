@@ -1,0 +1,33 @@
+Experiment dir : ./expsearch-try-20200415-070944
+04/15 07:09:44 AM args = Namespace(add_layers=['0'], add_width=['0'], arch_learning_rate=0.0006, arch_weight_decay=0.001, batch_size=128, cifar100=False, cutout=False, cutout_length=16, drop_path_prob=0.3, dropout_rate=[], epochs=25, grad_clip=5, init_channels=16, layers=8, learning_rate=0.025, learning_rate_min=0.0, momentum=0.9, noarc=10, note='try', report_freq=50, sample=[], save='./expsearch-try-20200415-070944', seed=0, stages=3, tmp_data_dir='../data1', train_portion=0.5, weight_decay=0.0003, workers=2)
+04/15 07:09:50 AM param size = 0.255064MB
+04/15 07:09:50 AM layers=8
+04/15 07:09:50 AM channels=16
+04/15 07:09:50 AM K=4
+04/15 07:09:50 AM Epoch: 0 lr: 2.500000e-02
+04/15 07:09:52 AM TRAIN Step: 000 Objs: 2.652071e+00 R1: 12.500000 R5: 57.812500
+04/15 07:10:23 AM TRAIN Step: 050 Objs: 2.061026e+00 R1: 25.811887 R5: 78.906250
+04/15 07:10:54 AM TRAIN Step: 100 Objs: 1.887555e+00 R1: 31.025681 R5: 83.214728
+04/15 07:11:25 AM TRAIN Step: 150 Objs: 1.772766e+00 R1: 35.006209 R5: 85.870240
+04/15 07:11:54 AM Train_acc 37.540000
+04/15 07:11:54 AM Epoch time: 124s
+epoch= 0 weights= tensor([[0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000, 0.5000]],
+       device='cuda:0', grad_fn=<SigmoidBackward>) weights2= 1
+04/15 07:11:54 AM Genotype(normal=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], normal_concat=range(2, 6), reduce=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], reduce_concat=range(2, 6))
+04/15 07:11:54 AM Epoch: 1 lr: 2.490143e-02
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+04/15 07:11:55 AM TRAIN Step: 000 Objs: 1.534249e+00 R1: 43.750000 R5: 91.406250

@@ -20,13 +20,13 @@ from genotypes import Genotype
 
 parser = argparse.ArgumentParser("cifar")
 parser.add_argument('--workers', type=int, default=2, help='number of workers to load dataset')
-parser.add_argument('--batch_size', type=int, default=128, help='batch size')
+parser.add_argument('--batch_size', type=int, default=256, help='batch size')
 parser.add_argument('--learning_rate', type=float, default=0.025, help='init learning rate')
 parser.add_argument('--learning_rate_min', type=float, default=0.0, help='min learning rate')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
 parser.add_argument('--weight_decay', type=float, default=3e-4, help='weight decay')
 parser.add_argument('--report_freq', type=float, default=50, help='report frequency')
-parser.add_argument('--epochs', type=int, default=25, help='num of training epochs')
+parser.add_argument('--epochs', type=int, default=2, help='num of training epochs')
 parser.add_argument('--init_channels', type=int, default=16, help='num of init channels')
 parser.add_argument('--layers', type=int, default=8, help='total number of layers')
 parser.add_argument('--cutout', action='store_true', default=False, help='use cutout')
@@ -46,7 +46,7 @@ parser.add_argument('--add_layers', action='append', default=['0'], help='add la
 parser.add_argument('--cifar100', action='store_true', default=False, help='search with cifar100 dataset')
 
 parser.add_argument('--stages',type=int,default=3,help='the number of stages')
-parser.add_argument('--noarc',type=int,default=10,help='no arch optimization')
+parser.add_argument('--noarc',type=int,default=1,help='no arch optimization')
 parser.add_argument('--sample',type=int,action='append',default=[],help='the propotion of channel sample')
 
 args = parser.parse_args()
