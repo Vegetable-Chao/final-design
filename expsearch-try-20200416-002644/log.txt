@@ -1,0 +1,158 @@
+2020-04-16 00:26:45,002 args = Namespace(add_layers=['0'], add_width=['0'], arch_learning_rate=0.0006, arch_weight_decay=0.001, batch_size=256, cifar100=False, cutout=False, cutout_length=16, drop_path_prob=0.3, dropout_rate=[], epochs=2, grad_clip=5, init_channels=16, layers=8, learning_rate=0.025, learning_rate_min=0.0, momentum=0.9, noarc=1, note='try', report_freq=50, sample=[], save='./expsearch-try-20200416-002644', seed=0, stages=3, tmp_data_dir='../data1', train_portion=0.5, use_EN=False, use_baidu=False, weight_decay=0.0003, workers=2)
+2020-04-16 00:26:50,987 param size = 0.299830MB
+2020-04-16 00:26:50,987 layers=8
+2020-04-16 00:26:50,988 channels=16
+2020-04-16 00:26:50,988 K=4
+2020-04-16 00:26:50,998 Epoch: 0 lr: 2.500000e-02
+2020-04-16 00:26:53,998 TRAIN Step: 000 Objs: 2.892321e+00 R1: 8.593750 R5: 47.656250
+2020-04-16 00:27:44,105 TRAIN Step: 050 Objs: 1.909190e+00 R1: 30.093444 R5: 82.682292
+2020-04-16 00:28:31,513 Train_acc 36.348000
+2020-04-16 00:28:31,518 Epoch time: 100s
+2020-04-16 00:28:32,215 valid 000 1.925168e+00 30.468750 84.375000
+2020-04-16 00:28:41,229 valid 050 1.843894e+00 34.757966 84.635417
+2020-04-16 00:28:49,809 Valid_acc 34.788000
+2020-04-16 00:28:49,823 Genotype(normal=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], normal_concat=range(2, 6), reduce=[('dil_conv_5x5', 0), ('dil_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], reduce_concat=range(2, 6))
+2020-04-16 00:28:49,823 Epoch: 1 lr: 1.250000e-02
+2020-04-16 00:28:53,632 TRAIN Step: 000 Objs: 1.629048e+00 R1: 39.453125 R5: 91.015625
+2020-04-16 00:30:23,587 TRAIN Step: 050 Objs: 1.372526e+00 R1: 49.188113 R5: 93.313419
+2020-04-16 00:31:48,438 Train_acc 51.156000
+2020-04-16 00:31:48,447 Epoch time: 178s
+2020-04-16 00:31:49,170 valid 000 1.499249e+00 41.015625 94.140625
+2020-04-16 00:31:58,504 valid 050 1.377410e+00 49.563419 93.520221
+2020-04-16 00:32:07,415 Valid_acc 49.720000
+2020-04-16 00:32:07,428 Genotype(normal=[('sep_conv_5x5', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_3x3', 3), ('dil_conv_3x3', 2), ('dil_conv_3x3', 3)], normal_concat=range(2, 6), reduce=[('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('dil_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_3x3', 4)], reduce_concat=range(2, 6))
+2020-04-16 00:32:07,682 switches_normal = [[True, True, False, True, True, True, True, False], [True, True, False, True, True, True, True, False], [True, True, False, False, True, True, True, True], [True, True, False, False, True, True, True, True], [True, True, False, True, True, True, True, False], [True, True, True, True, True, True, False, False], [True, True, False, True, True, False, True, True], [True, True, False, False, True, True, True, True], [True, True, False, False, True, True, True, True], [True, True, False, False, True, True, True, True], [False, True, True, True, True, False, True, True], [True, True, False, False, True, True, True, True], [True, True, False, False, True, True, True, True], [True, True, True, False, True, True, False, True]]
+2020-04-16 00:32:07,682 ['none', 'max_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['max_pool_3x3', 'avg_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,683 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 switches_reduce = [[True, False, False, True, True, True, True, True], [True, True, True, True, True, True, False, False], [True, False, False, True, True, True, True, True], [True, True, True, False, True, True, False, True], [True, True, False, False, True, True, True, True], [True, True, False, True, True, False, True, True], [True, True, True, True, True, True, False, False], [True, True, False, True, True, True, False, True], [True, True, False, False, True, True, True, True], [True, False, False, True, True, True, True, True], [True, True, True, False, True, False, True, True], [True, True, False, False, True, True, True, True], [True, True, False, False, True, True, True, True], [True, True, False, False, True, True, True, True]]
+2020-04-16 00:32:07,684 ['none', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'sep_conv_3x3', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,684 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:32:07,995 param size = 0.562958MB
+2020-04-16 00:32:07,995 layers=8
+2020-04-16 00:32:07,995 channels=32
+2020-04-16 00:32:07,995 K=8
+2020-04-16 00:32:08,016 Epoch: 0 lr: 2.500000e-02
+2020-04-16 00:32:10,957 TRAIN Step: 000 Objs: 2.610334e+00 R1: 8.593750 R5: 47.656250
+2020-04-16 00:32:55,850 TRAIN Step: 050 Objs: 1.806752e+00 R1: 33.026961 R5: 84.796262
+2020-04-16 00:33:38,338 Train_acc 38.676000
+2020-04-16 00:33:38,343 Epoch time: 90s
+2020-04-16 00:33:39,016 valid 000 1.530036e+00 35.546875 94.140625
+2020-04-16 00:33:46,837 valid 050 1.522066e+00 43.213848 91.942402
+2020-04-16 00:33:54,194 Valid_acc 43.064000
+2020-04-16 00:33:54,204 Genotype(normal=[('dil_conv_3x3', 0), ('dil_conv_3x3', 1), ('dil_conv_5x5', 1), ('dil_conv_3x3', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], normal_concat=range(2, 6), reduce=[('dil_conv_5x5', 0), ('sep_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_5x5', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_5x5', 3), ('dil_conv_5x5', 4)], reduce_concat=range(2, 6))
+2020-04-16 00:33:54,205 Epoch: 1 lr: 1.250000e-02
+2020-04-16 00:33:57,412 TRAIN Step: 000 Objs: 1.507400e+00 R1: 42.187500 R5: 94.140625
+2020-04-16 00:35:18,815 TRAIN Step: 050 Objs: 1.309842e+00 R1: 52.382047 R5: 94.263174
+2020-04-16 00:36:35,156 Train_acc 53.780000
+2020-04-16 00:36:35,164 Epoch time: 160s
+2020-04-16 00:36:35,851 valid 000 1.292315e+00 56.250000 94.921875
+2020-04-16 00:36:43,650 valid 050 1.242668e+00 56.357230 94.408701
+2020-04-16 00:36:51,543 Valid_acc 55.884000
+2020-04-16 00:36:51,554 Genotype(normal=[('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('dil_conv_5x5', 0), ('dil_conv_3x3', 1), ('dil_conv_5x5', 1), ('sep_conv_3x3', 3), ('max_pool_3x3', 3), ('sep_conv_3x3', 4)], normal_concat=range(2, 6), reduce=[('skip_connect', 0), ('max_pool_3x3', 1), ('dil_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 2), ('sep_conv_5x5', 3), ('dil_conv_3x3', 3), ('sep_conv_5x5', 4)], reduce_concat=range(2, 6))
+2020-04-16 00:36:51,804 switches_normal = [[True, True, False, False, True, True, False, False], [True, True, False, False, True, True, False, False], [False, False, False, False, True, True, True, True], [False, True, False, False, True, True, True, False], [True, True, False, False, False, True, True, False], [True, True, False, False, True, True, False, False], [False, True, False, False, True, False, True, True], [False, True, False, False, True, True, False, True], [False, True, False, False, True, True, True, False], [True, True, False, False, True, False, False, True], [False, True, True, False, False, False, True, True], [True, True, False, False, False, True, False, True], [False, True, False, False, True, True, True, False], [False, True, True, False, True, True, False, False]]
+2020-04-16 00:36:51,805 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,805 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,805 ['sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,805 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,805 ['none', 'max_pool_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,805 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,805 ['max_pool_3x3', 'sep_conv_3x3', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,805 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:36:51,805 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,805 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,805 ['max_pool_3x3', 'avg_pool_3x3', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,806 ['none', 'max_pool_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:36:51,806 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,806 ['max_pool_3x3', 'avg_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,806 switches_reduce = [[False, False, False, True, True, True, True, False], [False, True, True, False, True, True, False, False], [True, False, False, False, True, True, True, False], [True, True, True, False, False, False, False, True], [False, True, False, False, True, True, True, False], [False, True, False, True, False, False, True, True], [True, True, True, False, False, True, False, False], [True, True, False, False, False, True, False, True], [False, True, False, False, True, True, False, True], [True, False, False, True, True, False, False, True], [True, True, True, False, True, False, False, False], [True, True, False, False, True, True, False, False], [False, True, False, False, True, True, True, False], [False, True, False, False, True, True, False, True]]
+2020-04-16 00:36:51,806 ['skip_connect', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,806 ['max_pool_3x3', 'avg_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,806 ['none', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,806 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,806 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,807 ['max_pool_3x3', 'skip_connect', 'dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,807 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,807 ['none', 'max_pool_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:36:51,807 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:36:51,807 ['none', 'skip_connect', 'sep_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:36:51,807 ['none', 'max_pool_3x3', 'avg_pool_3x3', 'sep_conv_3x3']
+2020-04-16 00:36:51,807 ['none', 'max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:36:51,807 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:36:51,807 ['max_pool_3x3', 'sep_conv_3x3', 'sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:36:52,070 param size = 1.915734MB
+2020-04-16 00:36:52,070 layers=8
+2020-04-16 00:36:52,070 channels=64
+2020-04-16 00:36:52,070 K=8
+2020-04-16 00:36:52,089 Epoch: 0 lr: 2.500000e-02
+2020-04-16 00:36:54,858 TRAIN Step: 000 Objs: 2.567385e+00 R1: 5.468750 R5: 46.875000
+2020-04-16 00:37:40,340 TRAIN Step: 050 Objs: 1.843635e+00 R1: 32.475490 R5: 84.466912
+2020-04-16 00:38:23,723 Train_acc 39.372000
+2020-04-16 00:38:23,726 Epoch time: 91s
+2020-04-16 00:38:24,376 valid 000 1.790540e+00 39.062500 88.671875
+2020-04-16 00:38:31,654 valid 050 1.734540e+00 38.985907 89.353554
+2020-04-16 00:38:38,646 Valid_acc 39.316000
+2020-04-16 00:38:38,655 Genotype(normal=[('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('dil_conv_3x3', 1), ('dil_conv_3x3', 2), ('dil_conv_5x5', 2), ('dil_conv_3x3', 3), ('dil_conv_3x3', 3), ('sep_conv_5x5', 4)], normal_concat=range(2, 6), reduce=[('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('dil_conv_5x5', 1), ('dil_conv_3x3', 2), ('dil_conv_5x5', 2), ('dil_conv_5x5', 3), ('dil_conv_3x3', 3), ('dil_conv_5x5', 4)], reduce_concat=range(2, 6))
+2020-04-16 00:38:38,656 Epoch: 1 lr: 1.250000e-02
+2020-04-16 00:38:41,727 TRAIN Step: 000 Objs: 1.436961e+00 R1: 48.828125 R5: 94.140625
+2020-04-16 00:40:07,856 TRAIN Step: 050 Objs: 1.262118e+00 R1: 54.113051 R5: 94.554228
+2020-04-16 00:41:28,688 Train_acc 56.048000
+2020-04-16 00:41:28,693 Epoch time: 170s
+2020-04-16 00:41:29,351 valid 000 1.346135e+00 49.609375 94.531250
+2020-04-16 00:41:36,647 valid 050 1.299743e+00 51.861213 94.332108
+2020-04-16 00:41:43,610 Valid_acc 52.064000
+2020-04-16 00:41:43,618 Genotype(normal=[('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_3x3', 0), ('sep_conv_5x5', 2), ('dil_conv_5x5', 2), ('sep_conv_3x3', 3), ('dil_conv_5x5', 2), ('max_pool_3x3', 4)], normal_concat=range(2, 6), reduce=[('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('max_pool_3x3', 1), ('sep_conv_3x3', 2), ('max_pool_3x3', 2), ('dil_conv_5x5', 3), ('max_pool_3x3', 2), ('max_pool_3x3', 4)], reduce_concat=range(2, 6))
+2020-04-16 00:41:43,818 switches_normal = [[False, True, False, False, False, True, False, False], [False, False, False, False, True, True, False, False], [False, False, False, False, True, False, False, True], [False, False, False, False, True, True, False, False], [False, False, False, False, False, True, True, False], [False, True, False, False, True, False, False, False], [False, True, False, False, False, False, False, True], [False, False, False, False, False, True, False, True], [False, False, False, False, True, True, False, False], [False, False, False, False, True, False, False, True], [False, False, False, False, False, False, True, True], [False, False, False, False, False, True, False, True], [False, True, False, False, False, False, True, False], [False, True, False, False, False, True, False, False]]
+2020-04-16 00:41:43,818 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,818 ['sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,818 ['sep_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,818 ['sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,818 ['sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:41:43,818 ['max_pool_3x3', 'sep_conv_3x3']
+2020-04-16 00:41:43,818 ['max_pool_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,818 ['sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:41:43,818 ['sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,819 ['sep_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,819 ['dil_conv_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,819 ['sep_conv_5x5', 'dil_conv_5x5']
+2020-04-16 00:41:43,819 ['max_pool_3x3', 'dil_conv_3x3']
+2020-04-16 00:41:43,819 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,819 switches_reduce = [[False, False, False, False, False, True, True, False], [False, True, False, False, False, True, False, False], [False, False, False, False, False, True, True, False], [False, True, False, False, False, False, False, True], [False, False, False, False, True, True, False, False], [False, True, False, False, False, False, True, False], [False, True, False, False, False, True, False, False], [False, True, False, False, False, True, False, False], [False, True, False, False, False, False, False, True], [False, False, False, True, False, False, False, True], [False, True, True, False, False, False, False, False], [False, True, False, False, False, True, False, False], [False, True, False, False, False, True, False, False], [False, True, False, False, False, False, False, True]]
+2020-04-16 00:41:43,819 ['sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:41:43,819 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,819 ['sep_conv_5x5', 'dil_conv_3x3']
+2020-04-16 00:41:43,819 ['max_pool_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,819 ['sep_conv_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,819 ['max_pool_3x3', 'dil_conv_3x3']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,820 ['skip_connect', 'dil_conv_5x5']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'avg_pool_3x3']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'sep_conv_5x5']
+2020-04-16 00:41:43,820 ['max_pool_3x3', 'dil_conv_5x5']
+2020-04-16 00:41:43,865 Total searching time: 898s

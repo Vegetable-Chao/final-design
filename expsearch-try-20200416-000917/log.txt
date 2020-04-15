@@ -1,0 +1,13 @@
+2020-04-16 00:09:17,978 args = Namespace(add_layers=['0'], add_width=['0'], arch_learning_rate=0.0006, arch_weight_decay=0.001, batch_size=256, cifar100=False, cutout=False, cutout_length=16, drop_path_prob=0.3, dropout_rate=[], epochs=1, grad_clip=5, init_channels=16, layers=8, learning_rate=0.025, learning_rate_min=0.0, momentum=0.9, noarc=2, note='try', report_freq=50, sample=[], save='./expsearch-try-20200416-000917', seed=0, stages=3, tmp_data_dir='../data1', train_portion=0.5, use_EN=False, use_baidu=True, weight_decay=0.0003, workers=2)
+2020-04-16 00:09:23,856 param size = 0.238934MB
+2020-04-16 00:09:23,856 layers=8
+2020-04-16 00:09:23,856 channels=16
+2020-04-16 00:09:23,856 K=4
+2020-04-16 00:09:23,864 Epoch: 0 lr: 2.500000e-02
+2020-04-16 00:09:26,301 TRAIN Step: 000 Objs: 2.923992e+00 R1: 11.328125 R5: 51.171875
+2020-04-16 00:10:06,036 TRAIN Step: 050 Objs: 1.935966e+00 R1: 30.070466 R5: 81.916360
+2020-04-16 00:10:43,713 Train_acc 35.748000
+2020-04-16 00:10:43,717 Epoch time: 79s
+2020-04-16 00:10:44,328 valid 000 2.627333e+00 29.687500 78.906250
+2020-04-16 00:10:50,945 valid 050 2.469124e+00 31.311275 82.720588
+2020-04-16 00:10:57,242 Valid_acc 31.268000

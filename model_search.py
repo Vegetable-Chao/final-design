@@ -209,7 +209,7 @@ class GDAS_Reduction_Cell(nn.Module):
 
 
 class Network(nn.Module):
-    def __init__(self, C, num_classes, layers, criterion, steps=4, multiplier=4, stem_multiplier=3, switches_normal=[], switches_reduce=[], p=0.0,K=4,useredu=True,use_EN=False):
+    def __init__(self, C, num_classes, layers, criterion, steps=4, multiplier=4, stem_multiplier=3, switches_normal=[], switches_reduce=[], p=0.0,K=4,use_baidu=True,use_EN=False):
         super(Network, self).__init__()
         self.weights_normal=0
         self.weights_reduce=0
@@ -248,10 +248,10 @@ class Network(nn.Module):
             if i in [layers//3, 2*layers//3]:
                 C_curr *= 2
                 reduction = True
-                if useredu:
+                if use_baidu:
                     cell = GDAS_Reduction_Cell(steps, multiplier, C_prev_prev, C_prev, C_curr, reduction, reduction_prev, self.p,self.K)
-                #else:
-                    #cell = Cell(steps, multiplier, C_prev_prev, C_prev, C_curr, reduction, reduction_prev, switches_reduce, self.p,self.K)
+                else:
+                    cell = Cell(steps, multiplier, C_prev_prev, C_prev, C_curr, reduction, reduction_prev, switches_reduce, self.p,self.K)
             else:
                 reduction = False
                 cell = Cell(steps, multiplier, C_prev_prev, C_prev, C_curr, reduction, reduction_prev, switches_normal, self.p,self.K)

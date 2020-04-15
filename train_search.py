@@ -26,7 +26,7 @@ parser.add_argument('--learning_rate_min', type=float, default=0.0, help='min le
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
 parser.add_argument('--weight_decay', type=float, default=3e-4, help='weight decay')
 parser.add_argument('--report_freq', type=float, default=50, help='report frequency')
-parser.add_argument('--epochs', type=int, default=25, help='num of training epochs')
+parser.add_argument('--epochs', type=int, default=2, help='num of training epochs')
 parser.add_argument('--init_channels', type=int, default=16, help='num of init channels')
 parser.add_argument('--layers', type=int, default=8, help='total number of layers')
 parser.add_argument('--cutout', action='store_true', default=False, help='use cutout')
@@ -46,8 +46,10 @@ parser.add_argument('--add_layers', action='append', default=['0'], help='add la
 parser.add_argument('--cifar100', action='store_true', default=False, help='search with cifar100 dataset')
 
 parser.add_argument('--stages',type=int,default=3,help='the number of stages')
-parser.add_argument('--noarc',type=int,default=10,help='no arch optimization')
+parser.add_argument('--noarc',type=int,default=1,help='no arch optimization')
 parser.add_argument('--sample',type=int,action='append',default=[],help='the propotion of channel sample')
+parser.add_argument('--use_baidu',type=bool,default=False,help='whether to use the reduction cell of GDAS which designed by baidu')
+parser.add_argument('--use_EN',type=bool,default=False,help='whether to use batch normal in PC-DARTS')
 
 args = parser.parse_args()
 
@@ -68,37 +70,40 @@ else:
     data_folder = 'cifar-10-batches-py'
     
 
-def shengcheng(arch_nor,switches_normal):
+def shengcheng(arch_nor,arch_redu,switches_normal,switches_reduce):
             switches_nor=copy.deepcopy(switches_normal)
+            switches_redu=copy.deepcopy(switches_reduce)
             normal_prob = F.sigmoid(arch_nor).data.cpu()                      #.numpy()
+            reduce_prob = F.sigmoid(arch_redu).data.cpu()
             # reduce_prob = F.softmax(arch_param[1], dim=sm_dim).data.cpu().numpy()
             normal_final = [0 for idx in range(14)]
-            # reduce_final = [0 for idx in range(14)]
+            reduce_final = [0 for idx in range(14)]
             # # remove all Zero operations*************************************************
             for i in range(14):
                 if switches_nor[i][0] == True:
                     normal_prob[i][0] = 0
                 normal_final[i] = max(normal_prob[i])  #概率值
-                # if switches_reduce_2[i][0] == True:
-                #     reduce_prob[i][0] = 0
-                # reduce_final[i] = max(reduce_prob[i])       #最终选边操作
-
+                if switches_redu[i][0] == True:
+                    reduce_prob[i][0] = 0
+                normal_final[i] = max(normal_prob[i])  #概率值
+                reduce_final[i] = max(reduce_prob[i]) 
+                
 
             # Generate Architecture, similar to DARTS
             keep_normal = [0, 1]                           #？
-            # keep_reduce = [0, 1]
+            keep_reduce = [0, 1]
             n = 3
             start = 2
             for i in range(3):
                 end = start + n
                 tbsn = normal_final[start:end]
-                # tbsr = reduce_final[start:end]
+                tbsr = reduce_final[start:end]
                 edge_n = sorted(range(n), key=lambda x: tbsn[x])      
                 keep_normal.append(edge_n[-1] + start)        #边
                 keep_normal.append(edge_n[-2] + start)
-                # edge_r = sorted(range(n), key=lambda x: tbsr[x])
-                # keep_reduce.append(edge_r[-1] + start)
-                # keep_reduce.append(edge_r[-2] + start)
+                edge_r = sorted(range(n), key=lambda x: tbsr[x])
+                keep_reduce.append(edge_r[-1] + start)
+                keep_reduce.append(edge_r[-2] + start)
                 start = end
                 n = n + 1
             # set switches according the ranking of arch parameters
@@ -115,12 +120,23 @@ def shengcheng(arch_nor,switches_normal):
                             s+=1
                             if s!=index:
                                 switches_nor[i][j]=False
+            for i in range(14):
+                if not i in keep_reduce:
+                    for j in range(len(PRIMITIVES)):
+                        switches_redu[i][j] = False              #上一个swichnormal是选操作，这一个是选边
+                        
+                else:
+                    index=torch.max(reduce_prob[i],-1)[1]
+                    s=-1;flag=False
+                    for j in range(len(PRIMITIVES)):
+                        if switches_redu[i][j]==True:
+                            s+=1
+                            if s!=index:
+                                switches_redu[i][j]=False
                     
-                # if not i in keep_reduce:
-                #     for j in range(len(PRIMITIVES)):
-                #         switches_reduce[i][j] = False
+                
             # translate switches into genotype
-            genotype = parse_network(switches_nor)
+            genotype = parse_network(switches_nor,switches_redu)
             logging.info(genotype)
             # ## restrict skipconnect (normal cell only)
             # logging.info('Restricting skipconnect...')
@@ -185,7 +201,7 @@ def main():
     switches_normal = copy.deepcopy(switches)                      ###copy查阅
     switches_reduce = copy.deepcopy(switches)
     # To be moved to args
-    num_to_keep = [5, 3, 1]
+    num_to_keep = [6, 4, 2]
     num_to_drop = [2,2,2]                                          #修改
     if len(args.add_width) == args.stages:
         add_width = args.add_width                               #？？？
@@ -212,7 +228,8 @@ def main():
     
     
     for sp in range(len(num_to_keep)):                              
-        model = Network(args.init_channels + int(add_width[sp]), CIFAR_CLASSES, args.layers + int(add_layers[sp]), criterion, switches_normal=switches_normal,  p=float(drop_rate[sp]),K=int(sample[sp]))
+        model = Network(args.init_channels + int(add_width[sp]), CIFAR_CLASSES, args.layers + int(add_layers[sp]), criterion, switches_normal=switches_normal, switches_reduce=switches_reduce,
+                p=float(drop_rate[sp]),K=int(sample[sp]),use_baidu=args.use_baidu,use_EN=args.use_EN)
         model = nn.DataParallel(model)                         #？****一定注意，多GPU并行
         model = model.cuda()                                   
         logging.info("param size = %fMB", utils.count_parameters_in_MB(model))
@@ -221,7 +238,7 @@ def main():
         logging.info("K=%d",int(sample[sp]))
         network_params = []
         for k, v in model.named_parameters():                #？
-            if not (k.endswith('alphas_normal') or k.endswith('betas_normal')):      #具体是啥
+            if not (k.endswith('alphas_normal') or k.endswith('alphas_reduce')):      #具体是啥
                 network_params.append(v)
         optimizer = torch.optim.SGD(
                 network_params,
@@ -266,10 +283,11 @@ def main():
             if epochs - epoch < 5:
                 valid_acc, valid_obj = infer(valid_queue, model, criterion)
                 logging.info('Valid_acc %f', valid_acc)
-            print("epoch=",epoch,'weights=',model.module.weights_normal,'weights2=',model.module.weights2_normal)
+            print("epoch=",epoch,'weights_normal=',model.module.weights_normal,'weights_reduce=',model.module.weights_reduce)
             #/************************************************************/
             arch_normal = model.module.arch_parameters()[0]
-            shengcheng(arch_normal,switches_normal)
+            arch_reduce = model.module.arch_parameters()[1]
+            shengcheng(arch_normal,arch_reduce,switches_normal,switches_reduce)
             #/***********************************************************/
             
         utils.save(model, os.path.join(args.save, 'weights.pt'))
@@ -286,6 +304,7 @@ def main():
 
         # drop operations with low architecture weights
         arch_param = model.module.arch_parameters()
+        
         normal_prob = F.sigmoid(arch_param[0]).data.cpu().numpy()     ##化概率   
         for i in range(14):
             idxs = []
@@ -302,26 +321,25 @@ def main():
             else:
                 for idx in drop2:
                     switches_normal[i][idxs[idx]] = False                         #不断地关掉无效操作，正则化方法
-
-
-        # reduce_prob = F.softmax(arch_param[1], dim=-1).data.cpu().numpy()
-        # for i in range(14):
-        #     idxs = []
-        #     for j in range(len(PRIMITIVES)):
-        #         if switches_reduce[i][j]:
-        #             idxs.append(j)
-        #     if sp == len(num_to_keep) - 1:
-        #         drop = get_min_k_no_zero(reduce_prob[i, :], idxs, num_to_drop[sp])
-        #     else:
-        #         drop = get_min_k(reduce_prob[i, :], num_to_drop[sp])
-        #     for idx in drop:
-        #         switches_reduce[i][idxs[idx]] = False
-
-
         logging.info('switches_normal = %s', switches_normal)
         logging_switches(switches_normal)
-        # logging.info('switches_reduce = %s', switches_reduce)
-        # logging_switches(switches_reduce)
+        
+        if args.use_baidu == False:
+            reduce_prob = F.sigmoid(arch_param[1]).data.cpu().numpy()
+            #reduce_prob = F.softmax(arch_param[1], dim=-1).data.cpu().numpy()
+            for i in range(14):
+                idxs = []
+                for j in range(len(PRIMITIVES)):
+                    if switches_reduce[i][j]:
+                        idxs.append(j)
+                if sp == len(num_to_keep) - 1:
+                    drop = get_min_k_no_zero(reduce_prob[i, :], idxs, num_to_drop[sp])
+                else:
+                    drop = get_min_k(reduce_prob[i, :], num_to_drop[sp])
+                for idx in drop:
+                    switches_reduce[i][idxs[idx]] = False
+            logging.info('switches_reduce = %s', switches_reduce)
+            logging_switches(switches_reduce)
         
         #*****************************************************************************************************************
         #封装成函数
@@ -399,7 +417,7 @@ def infer(valid_queue, model, criterion):
     return top1.avg, objs.avg
 
 
-def parse_network(switches_normal):
+def parse_network(switches_normal,switches_reduce):
 
     def _parse_switches(switches):
         n = 2
@@ -416,13 +434,13 @@ def parse_network(switches_normal):
             n = n + 1
         return gene
     gene_normal = _parse_switches(switches_normal)
-    # gene_reduce = _parse_switches(switches_reduce)
+    gene_reduce = _parse_switches(switches_reduce)
     
     concat = range(2, 6)
     
     genotype = Genotype(
         normal=gene_normal, normal_concat=concat, 
-        reduce=gene_normal, reduce_concat=concat
+        reduce=gene_reduce, reduce_concat=concat
     )
     
     return genotype
