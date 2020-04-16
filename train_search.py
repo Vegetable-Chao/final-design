@@ -26,7 +26,7 @@ parser.add_argument('--learning_rate_min', type=float, default=0.0, help='min le
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
 parser.add_argument('--weight_decay', type=float, default=3e-4, help='weight decay')
 parser.add_argument('--report_freq', type=float, default=50, help='report frequency')
-parser.add_argument('--epochs', type=int, default=1, help='num of training epochs')
+parser.add_argument('--epochs', type=int, default=25, help='num of training epochs')
 parser.add_argument('--init_channels', type=int, default=16, help='num of init channels')
 parser.add_argument('--layers', type=int, default=5, help='total number of layers')
 parser.add_argument('--cutout', action='store_true', default=False, help='use cutout')
@@ -46,7 +46,7 @@ parser.add_argument('--add_layers', action='append', default=['0'], help='add la
 parser.add_argument('--cifar100', action='store_true', default=False, help='search with cifar100 dataset')
 
 parser.add_argument('--stages',type=int,default=3,help='the number of stages')
-parser.add_argument('--noarc',type=int,default=0,help='no arch optimization')
+parser.add_argument('--noarc',type=int,default=10,help='no arch optimization')
 parser.add_argument('--sample',type=int,action='append',default=[],help='the propotion of channel sample')
 parser.add_argument('--use_baidu',type=bool,default=False,help='whether to use the reduction cell of GDAS which designed by baidu')
 parser.add_argument('--use_EN',type=bool,default=False,help='whether to use batch normal in PC-DARTS')
@@ -80,12 +80,11 @@ def shengcheng(arch_nor,arch_redu,switches_normal,switches_reduce):
             reduce_final = [0 for idx in range(14)]
             # # remove all Zero operations*************************************************
             for i in range(14):
-                if switches_nor[i][0] == True:
-                    normal_prob[i][0] = 0
+                # if switches_nor[i][0] == True:
+                #     normal_prob[i][0] = 0
                 normal_final[i] = max(normal_prob[i])  #概率值
-                if switches_redu[i][0] == True:
-                    reduce_prob[i][0] = 0
-                normal_final[i] = max(normal_prob[i])  #概率值
+                # if switches_redu[i][0] == True:
+                #     reduce_prob[i][0] = 0
                 reduce_final[i] = max(reduce_prob[i]) 
                 
 
@@ -201,8 +200,8 @@ def main():
     switches_normal = copy.deepcopy(switches)                      ###copy查阅
     switches_reduce = copy.deepcopy(switches)
     # To be moved to args
-    num_to_keep = [5, 3, 1]
-    num_to_drop = [3,2,2]                                          #修改
+    num_to_keep = [4, 2, 1]
+    num_to_drop = [3,2,1]                                          #修改
     if len(args.add_width) == args.stages:
         add_width = args.add_width                               #？？？
     else:
@@ -313,14 +312,14 @@ def main():
                     idxs.append(j)
            
             # for the last stage, drop all Zero operations         
-            drop1 = get_min_k_no_zero(normal_prob[i, :], idxs, num_to_drop[sp]) ###看函数？？？看理论
+            # drop1 = get_min_k_no_zero(normal_prob[i, :], idxs, num_to_drop[sp]) ###看函数？？？看理论
             drop2 = get_min_k(normal_prob[i, :], num_to_drop[sp])
-            if sp == len(num_to_keep) - 1:
-                for idx in drop1:
-                    switches_normal[i][idxs[idx]] = False 
-            else:
-                for idx in drop2:
-                    switches_normal[i][idxs[idx]] = False                         #不断地关掉无效操作，正则化方法
+            # if sp == len(num_to_keep) - 1:
+            #     for idx in drop1:
+            #         switches_normal[i][idxs[idx]] = False 
+            # else:
+            for idx in drop2:
+                switches_normal[i][idxs[idx]] = False                         #不断地关掉无效操作，正则化方法
         logging.info('switches_normal = %s', switches_normal)
         logging_switches(switches_normal)
         
