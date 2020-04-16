@@ -26,9 +26,9 @@ parser.add_argument('--learning_rate_min', type=float, default=0.0, help='min le
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
 parser.add_argument('--weight_decay', type=float, default=3e-4, help='weight decay')
 parser.add_argument('--report_freq', type=float, default=50, help='report frequency')
-parser.add_argument('--epochs', type=int, default=2, help='num of training epochs')
+parser.add_argument('--epochs', type=int, default=1, help='num of training epochs')
 parser.add_argument('--init_channels', type=int, default=16, help='num of init channels')
-parser.add_argument('--layers', type=int, default=8, help='total number of layers')
+parser.add_argument('--layers', type=int, default=5, help='total number of layers')
 parser.add_argument('--cutout', action='store_true', default=False, help='use cutout')
 parser.add_argument('--cutout_length', type=int, default=16, help='cutout length')
 parser.add_argument('--drop_path_prob', type=float, default=0.3, help='drop path probability')
@@ -46,7 +46,7 @@ parser.add_argument('--add_layers', action='append', default=['0'], help='add la
 parser.add_argument('--cifar100', action='store_true', default=False, help='search with cifar100 dataset')
 
 parser.add_argument('--stages',type=int,default=3,help='the number of stages')
-parser.add_argument('--noarc',type=int,default=1,help='no arch optimization')
+parser.add_argument('--noarc',type=int,default=0,help='no arch optimization')
 parser.add_argument('--sample',type=int,action='append',default=[],help='the propotion of channel sample')
 parser.add_argument('--use_baidu',type=bool,default=False,help='whether to use the reduction cell of GDAS which designed by baidu')
 parser.add_argument('--use_EN',type=bool,default=False,help='whether to use batch normal in PC-DARTS')
@@ -201,16 +201,16 @@ def main():
     switches_normal = copy.deepcopy(switches)                      ###copy查阅
     switches_reduce = copy.deepcopy(switches)
     # To be moved to args
-    num_to_keep = [6, 4, 2]
-    num_to_drop = [2,2,2]                                          #修改
+    num_to_keep = [5, 3, 1]
+    num_to_drop = [3,2,2]                                          #修改
     if len(args.add_width) == args.stages:
         add_width = args.add_width                               #？？？
     else:
-        add_width = [[0,16],[0,16,48]][args.stages-2]                                    #add_width初始
+        add_width = [[0,16],[0,16,16]][args.stages-2]                                    #add_width初始
     if len(args.add_layers) == args.stages:
         add_layers = args.add_layers
     else:
-        add_layers = [[0,7],[0, 0, 0]][args.stages-2]                              #add_layers初始
+        add_layers = [[0,7],[0, 6, 11]][args.stages-2]                              #add_layers初始
     if len(args.dropout_rate) ==args.stages:
         drop_rate = args.dropout_rate
     else:
