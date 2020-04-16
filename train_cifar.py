@@ -24,17 +24,17 @@ parser.add_argument('--learning_rate', type=float, default=0.025, help='init lea
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
 parser.add_argument('--weight_decay', type=float, default=3e-4, help='weight decay')
 parser.add_argument('--report_freq', type=float, default=50, help='report frequency')
-parser.add_argument('--epochs', type=int, default=600, help='num of training epochs')
+parser.add_argument('--epochs', type=int, default=700, help='num of training epochs')
 parser.add_argument('--init_channels', type=int, default=36, help='num of init channels')
 parser.add_argument('--layers', type=int, default=20, help='total number of layers')
-parser.add_argument('--auxiliary', action='store_true', default=False, help='use auxiliary tower')
+parser.add_argument('--auxiliary', action='store_true', default=True, help='use auxiliary tower')
 parser.add_argument('--auxiliary_weight', type=float, default=0.4, help='weight for auxiliary loss')
-parser.add_argument('--cutout', action='store_true', default=False, help='use cutout')
+parser.add_argument('--cutout', action='store_true', default=True, help='use cutout')
 parser.add_argument('--cutout_length', type=int, default=16, help='cutout length')
 parser.add_argument('--drop_path_prob', type=float, default=0.3, help='drop path probability')
-parser.add_argument('--save', type=str, default='/tmp/checkpoints/', help='experiment name')
+parser.add_argument('--save', type=str, default='./', help='experiment name')
 parser.add_argument('--seed', type=int, default=0, help='random seed')
-parser.add_argument('--arch', type=str, default='PDARTS', help='which architecture to use')
+parser.add_argument('--arch', type=str, default='both_pro_net', help='which architecture to use')
 parser.add_argument('--grad_clip', type=float, default=5, help='gradient clipping')
 parser.add_argument('--tmp_data_dir', type=str, default='../data1', help='temp data dir')
 parser.add_argument('--note', type=str, default='try', help='note for this run')
@@ -120,11 +120,13 @@ def main():
         valid_acc, valid_obj = infer(valid_queue, model, criterion)
         if valid_acc > best_acc:
             best_acc = valid_acc
+            utils.save(model.module, os.path.join(args.save, 'weights.pt'))
         logging.info('Valid_acc: %f', valid_acc)
+        logging.info('best_acc:%f',best_acc)
         end_time = time.time()
         duration = end_time - start_time
         print('Epoch time: %ds.' % duration )
-        utils.save(model.module, os.path.join(args.save, 'weights.pt'))
+        
 
 def train(train_queue, model, criterion, optimizer):
     objs = utils.AvgrageMeter()

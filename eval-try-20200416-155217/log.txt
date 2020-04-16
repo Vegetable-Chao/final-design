@@ -1,0 +1,21 @@
+2020-04-16 15:52:17,709 args = Namespace(arch='both_pro_net', auxiliary=True, auxiliary_weight=0.4, batch_size=128, cifar100=False, cutout=True, cutout_length=16, drop_path_prob=0.3, epochs=600, grad_clip=5, init_channels=36, layers=20, learning_rate=0.025, momentum=0.9, note='try', report_freq=50, save='./eval-try-20200416-155217', seed=0, tmp_data_dir='../data1', weight_decay=0.0003, workers=4)
+2020-04-16 15:52:17,709 unparsed args = []
+2020-04-16 15:52:17,709 Genotype(normal=[('skip_connect', 0), ('dil_conv_5x5', 1), ('sep_conv_3x3', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 2), ('sep_conv_3x3', 1), ('skip_connect', 2)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 0), ('dil_conv_5x5', 1), ('sep_conv_5x5', 1), ('sep_conv_3x3', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 3), ('dil_conv_3x3', 1), ('sep_conv_5x5', 3)], reduce_concat=range(2, 6))
+2020-04-16 15:52:22,887 param size = 3.661030MB
+2020-04-16 15:52:24,192 Epoch: 0 lr 2.500000e-02
+2020-04-16 15:52:25,614 Train Step: 000 Objs: 3.242603e+00 Acc: 14.843750
+2020-04-16 15:52:45,125 Train Step: 050 Objs: 3.217593e+00 Acc: 11.856618
+2020-04-16 15:53:04,149 Train Step: 100 Objs: 3.125580e+00 Acc: 15.153156
+2020-04-16 15:53:22,984 Train Step: 150 Objs: 3.013835e+00 Acc: 18.356788
+2020-04-16 15:53:41,776 Train Step: 200 Objs: 2.902222e+00 Acc: 21.334733
+2020-04-16 15:54:00,538 Train Step: 250 Objs: 2.818225e+00 Acc: 23.895045
+2020-04-16 15:54:19,340 Train Step: 300 Objs: 2.741666e+00 Acc: 26.121262
+2020-04-16 15:54:38,041 Train Step: 350 Objs: 2.677089e+00 Acc: 27.964744
+2020-04-16 15:54:53,795 Train_acc: 29.232000
+2020-04-16 15:54:54,275 Valid Step: 000 Objs: 1.738682e+00 Acc: 32.812500
+2020-04-16 15:54:57,788 Valid Step: 050 Objs: 1.744084e+00 Acc: 36.381740
+2020-04-16 15:54:59,972 Valid_acc: 36.500000
+2020-04-16 15:54:59,972 best_acc:36.500000
+2020-04-16 15:54:59,972 Epoch: 1 lr 2.499983e-02
+2020-04-16 15:55:01,125 Train Step: 000 Objs: 2.186183e+00 Acc: 37.500000
+2020-04-16 15:55:20,920 Train Step: 050 Objs: 2.176227e+00 Acc: 42.340686

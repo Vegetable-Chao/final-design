@@ -1,0 +1,12 @@
+2020-04-16 15:49:07,482 args = Namespace(arch='both_pro_net', auxiliary=True, auxiliary_weight=0.4, batch_size=128, cifar100=False, cutout=True, cutout_length=16, drop_path_prob=0.3, epochs=600, grad_clip=5, init_channels=36, layers=20, learning_rate=0.025, momentum=0.9, note='try', report_freq=50, save='./eval-try-20200416-154907', seed=0, tmp_data_dir='../data1', weight_decay=0.0003, workers=4)
+2020-04-16 15:49:07,483 unparsed args = []
+2020-04-16 15:49:07,483 Genotype(normal=[('skip_connect', 0), ('dil_conv_5x5', 1), ('sep_conv_3x3', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 2), ('sep_conv_3x3', 1), ('skip_connect', 2)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 0), ('dil_conv_5x5', 1), ('sep_conv_5x5', 1), ('sep_conv_3x3', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 3), ('dil_conv_3x3', 1), ('sep_conv_5x5', 3)], reduce_concat=range(2, 6))
+2020-04-16 15:49:12,694 param size = 3.661030MB
+2020-04-16 15:49:14,049 Epoch: 0 lr 2.500000e-02
+2020-04-16 15:49:15,466 Train Step: 000 Objs: 3.242603e+00 Acc: 14.843750
+2020-04-16 15:49:34,918 Train Step: 050 Objs: 3.184548e+00 Acc: 13.526348
+2020-04-16 15:49:54,041 Train Step: 100 Objs: 3.053776e+00 Acc: 17.674814
+2020-04-16 15:50:12,843 Train Step: 150 Objs: 2.933483e+00 Acc: 20.871275
+2020-04-16 15:50:31,587 Train Step: 200 Objs: 2.836805e+00 Acc: 23.437500
+2020-04-16 15:50:50,437 Train Step: 250 Objs: 2.763283e+00 Acc: 25.529133
+2020-04-16 15:51:09,330 Train Step: 300 Objs: 2.698956e+00 Acc: 27.424211
